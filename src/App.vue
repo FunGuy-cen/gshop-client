@@ -1,14 +1,22 @@
 <template>
     <div id="app">
         <router-view />
-        <!-- $route  当前路由 -->
+        <!-- $route ????-->
         <FooterGuide v-show="$route.meta.showFooter" />
     </div>
 </template>
 
 <script>
 import FooterGuide from "./components/FooterGuide/FooterGuide";
+import { reqFoodTypes } from './api'
+
 export default {
+
+    async mounted() {
+        const result = await reqFoodTypes()
+        console.log(result)
+    },
+
     components: {
         FooterGuide
     }
