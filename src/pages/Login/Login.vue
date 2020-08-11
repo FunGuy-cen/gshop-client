@@ -39,7 +39,7 @@
                             </section>
                             <section class="login_message">
                                 <input type="text" maxlength="11" placeholder="验证码" v-model="captcha">
-                                <img class="get_verification" src="./images/captcha.svg" alt="captcha">
+                                <img class="get_verification" src="http://localhost:4000/captcha" alt="captcha" @click="getCaptcha">
                             </section>
                         </section>
                     </div>
@@ -58,7 +58,7 @@
 
 <script>
 import AlertTip from '../../components/AlertTip/AlertTip'
-
+import { reqSendcode, reqLogin_sms, reqLogin_pwd } from '../../api'
 export default {
     data() {
         return {
@@ -83,18 +83,29 @@ export default {
 
     methods: {
         // 异步获取短信验证码
-        getCode() {
+        async getCode() {
             if (!this.computeTime) {
                 // 启动倒计时
                 this.computeTime = 60
-                setInterval(() => {
+                this.intervalId = setInterval(() => {
                     this.computeTime--
                     if (this.computeTime <= 0) {
                         // 停止计时
-                        clearInterval(intervalId)
+                        clearInterval(this.intervalId)
                     }
                 }, 1000);
+
                 // 发送ajax请求，向手机号发送短信验证码
+                const result = await reqSendcode(this.phone)
+                if (result.code === 1) {
+                    // 显示提示
+                    this.showAlert(result.msg)
+                    // 停止计时
+                    if (this.computeTime) {
+                        this.computeTime = 0
+                        clearInterval(this.intervalId)
+                    }
+                }
             }
         },
 
@@ -113,7 +124,7 @@ export default {
                     this.showAlert('手机号不正确')
                 } else if (!/^\d{6}$/.test(code)) {
                     // 提示验证码必须是6位数字
-                    this.showAlert('验证码必须是6位')
+                    this.showAlert('验证码不正确')
                 }
             } else {// 密码登录
                 const { name, pwd, captcha } = this
@@ -130,10 +141,17 @@ export default {
             }
         },
 
+        // 获取验证码图片
+        getCaptcha(event) {
+            // 每次指定src值不一样
+            event.target.src = 'http://localhost:4000/captcha?time=' + Date.now()
+        },
+
+        // 关闭提示框
         closeTip() {
             this.alertShow = false
             this.alertText = ''
-        }
+        },
     },
 
     components: {
