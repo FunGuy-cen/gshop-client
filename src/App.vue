@@ -16,6 +16,7 @@ export default {
         // const result = await reqCategorys()
         // console.log(result)
         this.$store.dispatch('getAddress')
+        this.$store.dispatch('getUserInfo')
     },
 
     components: {
