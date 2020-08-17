@@ -14,7 +14,7 @@
                 <span></span>
             </div>
             <p class="tip_text">{{alertText}}</p>
-            <div class="confrim" @click="closeTip">确认</div>
+            <div class="confrim" @click="closeTip">确 认</div>
         </section>
     </div>
 </template>
@@ -89,20 +89,22 @@ export default {
                 margin-top: 2px
                 background-color: #f8cb86
         .tip_text
-            font-size: 14px color #333
+            font-size: 14px
+            color: #333
             line-height: 20px
             text-align: center
             margin-top: 10px
             padding: 0 5px
         .confrim
             font-size: 18px
-            font-weight: bold
             margin-top: 10px
+            color: #fff
             background-color: #02a774
             width: 100%
             text-align: center
             line-height: 35px
-            border: 1px color #fff
+            letter-spacing: 15px
+            border: 1px
             border-bottom-left-radius: 5px
             border-bottom-right-radius: 5px
 </style>

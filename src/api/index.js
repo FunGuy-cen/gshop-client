@@ -21,7 +21,7 @@ export const reqSearch_shops = (geohash, keyword) => ajax(BASE_URL + '/search_sh
 // 6、用户名密码登陆
 export const reqLogin_pwd = ({ name, pwd, captcha }) => ajax(BASE_URL + '/login_pwd', { name, pwd, captcha }, 'POST')
 
-// 7、发送短信验证码
+// 7、发送短信验证码 
 export const reqSendcode = (phone) => ajax(BASE_URL + '/sendcode', { phone })
 
 // 8、手机号验证码登陆
