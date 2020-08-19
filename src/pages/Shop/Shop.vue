@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: lubaicen
+ * @Date: 2020-08-18 15:39:06
+ * @LastEditors: lubaicen
+ * @LastEditTime: 2020-08-19 11:31:08
+-->
 <template>
     <div>
         <ShopHeader />
@@ -14,15 +22,45 @@
         </div>
         <router-view />
     </div>
-</template>
+</template> 
 
 <script>
 import ShopHeader from '../../components/ShopHeader/ShopHeader'
 export default {
+    mounted() {
+        this.$store.dispatch('getShopInfo')
+    },
     components: {
         ShopHeader
     }
 };
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus"></style>
+<style lang="stylus" rel="stylesheet/stylus">
+@import '../../common/stylus/mixins.styl'
+.tab
+    height: 40px
+    line-height: 40px
+    background-color: #fff
+    border-bottom: 1px solid rgba(7, 17, 27, 0.1)
+    .tab-item
+        float: left
+        width: 33.33333%
+        text-align: center
+        font-size: 14px
+        color: rgb(77, 85, 93)
+        a
+            display: block
+            position: relative
+            &.router-link-active
+                color: #02a774
+                &::after
+                    content: ''
+                    position: absolute
+                    left: 50%
+                    bottom: 1px
+                    width: 35px
+                    height: 2px
+                    transform: translateX(-50%)
+                    background: #02a774
+</style>
